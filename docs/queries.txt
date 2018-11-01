@@ -1,0 +1,79 @@
+
+--
+
+select
+val.id as val_id,
+val.value as val_value,
+val.unit as val_unit,
+val.precision as val_precision,
+val_format,
+val_sequence,
+val.description as val_description,
+val.symbol_id as val_symbol_id,
+sym.id as sym_id,
+sym.name as sym_name,
+sym.description as sym_des,
+sym.category_id as sym_cat_id,
+cat.id as cat_id,
+cat.name as cat_name,
+cat.description as cat_des,
+cat.update_id as cat_update_id,
+upd.id,
+upd.pub_date,
+upd.pub_hour
+   
+from MARKETUPDAtE_value val, MARKETUPDAtE_symbol sym, MARKETUPDAtE_category cat, MARKETUPDAtE_update upd
+
+where cat.update_id = (select max(id) from MARKETUPDAtE_update) and upd.id = update_id and
+
+sym.category_id = cat.id and val.symbol_id = sym.id
+
+order by cat.id, sym.id, val.val_sequence
+
+
+___________________________________________________________
+
+
+select val.*, sym.*, cat.* from MARKETUPDAtE_value val, MARKETUPDAtE_symbol sym, MARKETUPDAtE_category cat
+where cat.update_id = (select max(id) from MARKETUPDAtE_update) and
+sym.category_id = cat.id and val.symbol_id = sym.id
+order by cat.id, sym.id, val_sequence
+
+
+
+
+
+select sym.*, cat.* from MARKETUPDAtE_symbol sym, MARKETUPDAtE_category cat
+where cat.update_id = (select max(id) from MARKETUPDAtE_update) and
+sym.category_id = cat.id
+order by cat.id, sym.id
+
+
+
+
+select cat.* from MARKETUPDAtE_category cat
+where cat.update_id = (select max(id) from MARKETUPDAtE_update)
+order by cat.id
+
+
+ SELECT 
+sym.id as sym_id,
+sym.name as sym_name,
+sym.description as sym_des,
+sym.category_id as sym_cat_id,
+cat.id as cat_id,
+cat.name as cat_name,
+cat.description as cat_des,
+cat.update_id as cat_update_id
+
+FROM MARKETUPDAtE_symbol sym, marketupdate_category cat
+
+WHERE cat.id = (( SELECT max(marketupdate_update.id) AS max FROM marketupdate_update))
+and sym.category_id = cat.id 
+
+ORDER BY cat.id, sym.id;
+
+
+
+
+

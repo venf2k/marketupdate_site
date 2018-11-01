@@ -1,0 +1,239 @@
+
+-- create django project 
+django-admin startproject backend_app
+rename root folder in django_rest_marketupdate_backend
+
+
+-- set backend_app settings
+set database 
+set time zone
+
+-- start app models
+python manage.py marketupdate
+in setttings della backend_app inserire tra le installed apps la nuova marketupdate 
+nel file admin dellanuova app aggiugere import e registeazione sito per modificare ongi singola tabella nella parte admin del sito
+
+
+-- creazione db
+python manage.py makemigration
+python manage.py migrate
+
+
+-- creazione app rest
+definizione serializer.py
+definzione viewset.py
+modifica urls.py
+--
+
+
+--creazione client rest request in C:\Apps\python\Projects\requests_rest_marketupdate_client
+creato codice di esempio con post inserimento in ordine: update, category, symbol, value
+facendosi restituire la pk da utilizzare come riferimenti nelle tabelle annidate
+
+
+
+--memo secrets/passwords/ect:
+DB posgres secret password: solita vecchia vecchia
+admin django user: fvenettoni/(solita vecchia 2k)
+
+
+
+
+
+Todos
+
+=> aggiungere sicurezza app/client rest
+https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#legacy-application-flow
+
+
+=> creare front end angular 
+
+
+
+
+
+-- creazione marketupdate backend rest-api
+cd C:\Apps\python\Projects\marketupdate_SVIL\marketupdate
+django-admin startapp postdata
+
+
+modificato settings:
+
+INSTALLED_APPS = [
+    'getupdate.apps.GetupdateConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    #aggiunto per REST-API
+    'rest_framework',
+    'postdata'
+]
+
+#aggiunto per REST-API
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+
+
+
+
+
+-- marketupdate fornt end web with django
+
+VIRTUAL_ENV marketupdate_SVIL
+
+DATABASE POSTGRES
+
+URL http://127.0.0.1:8080/getupdate/latest
+
+
+conda activate marketupdate_SVIL
+
+
+
+django-admin startproject marketupdate
+
+django-admin startapp getupdate
+
+
+start http server sulla porta 8080
+in /marketupdate
+python manage.py runserver 8080
+
+
+
+Database sqllite
+modificato nome db (marketupdate.sqllite3) in settings
+
+creazione tabelle
+ python manage.py migrate
+
+
+modifiche allo schema delle tabelle
+ python manage.py makemigrations
+ python manage.py migrate
+
+
+
+Entity Symbols (Tickers)
+------------------------
+name
+category (foreign key)
+description
+update (foreign key)
+
+value 1
+unit 1
+memo 1
+precision 1
+format 1
+
+value 2
+unit 2
+memo 2
+precision 2
+format 2
+
+value 3
+unit 3
+memo 3
+precision 3
+format 3
+
+value 4
+unit 4
+memo 4
+precision 4
+format 4
+
+value 5
+unit 5
+memo 5
+precision 5 
+format 5
+
+
+Updates (Tickers)
+------------------------
+Id Primary key
+date
+time
+
+
+Categories 
+------------------------
+Id Primary key
+name
+
+
+-- PER MODIFICARE I DATI aprire db con DBSTUDIO
+
+-- per sito admin user=fvenettoni pwd solita (2k)
+
+-- test django database api
+
+------partenza shell
+python manage.py shell 
+
+------import oggetti del modello dell'applicazione
+from getupdate.models import Symbol, Category, Update
+
+-- select * from Symbol
+q1 = Symbol.objects.all()
+print(q1)
+
+-- select pruìimary_key from Update where update date and time = max date and time
+u1 = Update.objects.order_by('pub_date', 'pub_hour').values('pk')[0] 
+print(u1)
+
+-- select pk where ..
+u1 = Update.objects.order_by('pub_date', 'pub_hour').values('pk')[0] 
+print(u1)
+
+--
+from django.db.models import Max
+u1 = Update.objects.aggregate(Max('pk'))
+
+u2 = Update.objects.filter(pk=u1)
+
+one_entry = Update.objects.get(pk=1)
+
+
+
+
+
+--row data
+
+for p in Update.objects.raw('SELECT * FROM getupdate_Update'):
+	print(p)
+
+qr = SELECT * FROM getupdate_Update where pub_date = (select max(pub_date) from getupdate_Update) and pub_hour = (select max(pub_hour) from getupdate_Update)
+
+
+--
+c = Category.objects.get(id=1)
+c.symbol_set.all()
+
+
+s=Symbol.objects.aggregate(last_date = Max('update__pub_date'), last_time = Max('update__pub_hour'))
+
+
+
+
+Istallato angular manualmente (unzipped node.js) e poi in ..frontend\static:
+C:\Apps\node-v8.11.4-win-x64\npm install angular
+C:\Apps\node-v8.11.4-win-x64\npm install angular-resource
+
+
+
