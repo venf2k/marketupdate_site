@@ -38,35 +38,34 @@ Per aggiungere colonne modificare variabile TabColsNum
 Tabella di marketupdate
 -->  
 		<table  class="table table-striped">
-	        <tbody ng-repeat="category in menu.market_update_set | unique : 'cat_des'">
+	        <tbody ng-repeat="category in menu.market_update_set | unique : 'cat_name'">
 	        	<tr class="bg-danger text-white font-weight-bold">
 	            	<td scope="col" colspan = "{{  TabColsNum }}">{{ category.cat_des }} </td>
 	          	</tr>
 	  		    <tr class = "font-weight-bold">
-	   		    	<td ng-repeat="title_sym in menu.market_update_set | filter : {cat_des :  category.cat_des} | unique : 'sym_name'" >
-	  		    		{{ title_sym.sym_name }} 
+	   		    	<td ng-repeat="title_sym in menu.market_update_set | filter : {cat_name :  category.cat_name} | unique : 'sym_des'" >
+	  		    		{{ title_sym.sym_des }} 
 	  		        </td>
-	  		        <td ng-repeat="title in menu.market_update_set | filter : {cat_des :  category.cat_des} | unique : 'val_description'" >  
+	  		        <td ng-repeat="title in menu.market_update_set | filter : {cat_name :  category.cat_name} | unique : 'val_description'" >  
 	        			 {{ title.val_description }}
 	        			 <span ng-if="title.val_unit == 1" >(%)</span>
 	        			 <span ng-if="title.val_unit == 2" >(bps)</span>
 	        			 <span ng-if="title.val_unit == 5" >(€)</span> 
-	        			 <span ng-if="title.val_unit == 6" >(pts)</span> 
 	        		</td>
 <!--
 	Aggiunta colonne fino a TabColsNum 
 -->
-	  		        <td ng-repeat="addcols in menu.market_update_set | filter : {cat_des :  category.cat_des} | unique : 'val_description' | RestN : TabColsNum track by $index"></td>   
+	  		        <td ng-repeat="addcols in menu.market_update_set | filter : {cat_name :  category.cat_name} | unique : 'val_description' | RestN : TabColsNum track by $index"></td>   
 
-	        	<tr ng-repeat="symbol in menu.market_update_set | filter : {cat_des :  category.cat_des} | unique : 'sym_des'">
-	        		<td > {{ symbol.sym_des }} </td>
-	        		<td ng-repeat="value in menu.market_update_set | filter : { cat_des : category.cat_des, sym_des : symbol.sym_des }" >  
+	        	<tr ng-repeat="symbol in menu.market_update_set | filter : {cat_name :  category.cat_name} | unique : 'sym_name'">
+	        		<td > {{ symbol.sym_name }} </td>
+	        		<td ng-repeat="value in menu.market_update_set | filter : { cat_name : category.cat_name, sym_name : symbol.sym_name }" >  
 						 {{ value.val_value | number : value.val_precision }} 
 	        		</td>
 <!--
 	Aggiunta colonne fino a TabColsNum 
 -->        		
-	  		        <td ng-repeat="addcols in menu.market_update_set | filter : { cat_des : category.cat_des, sym_des : symbol.sym_des } | RestN : TabColsNum track by $index"> </td>   
+	  		        <td ng-repeat="addcols in menu.market_update_set | filter : { cat_name : category.cat_name, sym_name : symbol.sym_name } | RestN : TabColsNum track by $index"> </td>   
 
 	        	</tr>
 

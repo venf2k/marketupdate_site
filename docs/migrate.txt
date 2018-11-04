@@ -1,0 +1,27 @@
+
+1. creare progetto django
+django-admin startproject marketupdate_site
+
+2. copiare directories
+_site
+_frontend
+_model
+_rest
+
+3. migrare db
+a) creaate db -- postgres db create
+b) python mange.py makemigrations marketupdate_model
+c) python mange.py migrate
+d) create view all_last_update_v --postgres view create
+ 
+
+4. verify tables names in django_content_type table and rename them if necessary
+
+
+5. create/update django admin user 
+python manage.py createsuperuser
+
+
+6. up & running
+
+

@@ -15,7 +15,7 @@ class Update(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200, null=True)
-    update = models.ForeignKey(Update, on_delete=models.SET_NULL, null=True,)
+    update = models.ForeignKey(Update, on_delete=models.CASCADE, null=True,)
     
     class Meta:
     	ordering = ['pk']
@@ -27,7 +27,7 @@ class Category(models.Model):
 class Symbol(models.Model):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200, null=True)
-    category = models.ForeignKey(Category, models.SET_NULL, blank=True, null=True, )
+    category = models.ForeignKey(Category, models.CASCADE, blank=True, null=True, )
 
     class Meta:
         ordering = ['pk']
@@ -50,8 +50,8 @@ class Value(models.Model):
     precision = models.PositiveSmallIntegerField(default=0)
     val_format = models.PositiveSmallIntegerField(default=0)
     val_sequence = models.PositiveSmallIntegerField(default=0)
-    description = models.CharField(max_length=10, blank=True, null=True)
-    symbol = models.ForeignKey(Symbol, models.SET_NULL, blank=True, null=True, )
+    description = models.CharField(max_length=200, blank=True, null=True)
+    symbol = models.ForeignKey(Symbol, models.CASCADE, blank=True, null=True, )
 
     class Meta:
         ordering = ['pk']
