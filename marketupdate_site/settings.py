@@ -118,11 +118,10 @@ TIME_ZONE = 'Europe/Rome'
 USE_I18N = True
 
 #DATE_FORMAT = "d-m-Y"
-USE_L10N = False
+USE_L10N = True
 
 USE_TZ = True
 
-DECIMAL_SEPARATOR = ','
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
